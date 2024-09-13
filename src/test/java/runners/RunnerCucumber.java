@@ -33,29 +33,45 @@ public class RunnerCucumber {
 
     @BeforeClass
     public static void SetUp() throws Exception {
-        MutableCapabilities caps = new MutableCapabilities();
-        caps.setCapability("platformName", "Android");
-        caps.setCapability("appium:app", "storage:filename=ExperiBank.apk");  // The filename of the mobile app
-        caps.setCapability("appium:deviceName", "Google Pixel 5 GoogleAPI Emulator");
-        caps.setCapability("appium:platformVersion", "12.0");
-        caps.setCapability("appium:automationName", "UiAutomator2");
-        MutableCapabilities sauceOptions = new MutableCapabilities();
-        sauceOptions.setCapability("username", "oauth-caguirreh-d0632");
-        sauceOptions.setCapability("accessKey", "a7b5d122-b9f1-4b75-b06a-4e7a886d13e3");
-        sauceOptions.setCapability("build", "appium-build-N3G51");
-        sauceOptions.setCapability("name", "<your test name>");
-        sauceOptions.setCapability("deviceOrientation", "PORTRAIT");
-        caps.setCapability("sauce:options", sauceOptions);
+        int maxRetries = 3;
+        int retryCount = 0;
+        boolean sessionStarted = false;
 
-        // Start the session
-        URL url = new URL("https://ondemand.us-west-1.saucelabs.com:443/wd/hub");
-        driver = new AndroidDriver(url, caps);
-        driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+        while (retryCount < maxRetries && !sessionStarted) {
+            try {
+                MutableCapabilities caps = new MutableCapabilities();
+                caps.setCapability("platformName", "Android");
+                caps.setCapability("appium:app", "storage:filename=sawlab.apk");
+                caps.setCapability("appium:deviceName", "Google Pixel 5 GoogleAPI Emulator");
+                caps.setCapability("appium:platformVersion", "12.0");
+                caps.setCapability("appium:automationName", "UiAutomator2");
+                MutableCapabilities sauceOptions = new MutableCapabilities();
+                sauceOptions.setCapability("username", "oauth-caguirreh-d0632");
+                sauceOptions.setCapability("accessKey", "a7b5d122-b9f1-4b75-b06a-4e7a886d13e3");
+                sauceOptions.setCapability("build", "appium-build-N3G51");
+                sauceOptions.setCapability("name", "<your test name>");
+                sauceOptions.setCapability("deviceOrientation", "PORTRAIT");
+                caps.setCapability("sauce:options", sauceOptions);
+
+                URL url = new URL("https://ondemand.us-west-1.saucelabs.com:443/wd/hub");
+                driver = new AndroidDriver(url, caps);
+                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                sessionStarted = true;
+            } catch (Exception e) {
+                retryCount++;
+                if (retryCount == maxRetries) {
+                    throw e;
+                }
+                Thread.sleep(5000); // Esperar 5 segundos antes de reintentar
+            }
+        }
     }
 
     @AfterClass
     public static void CloseApp() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
 }
