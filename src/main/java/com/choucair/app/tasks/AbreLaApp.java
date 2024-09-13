@@ -12,14 +12,14 @@ public class AbreLaApp implements Task {
 
     public AbreLaApp(){  }
 
-    public static AbreLaApp eribank(){
+    public static AbreLaApp swagLabs(){
         return Tasks.instrumented(AbreLaApp.class);
     }
 
     @Override
     @Step("App Swag Labs abierta")
     public <T extends Actor> void performAs(T actor) {
-        Logger.getAnonymousLogger().info("Se abre app eribank");
+        Logger.getAnonymousLogger().info("Se abre app Swag Labs");
         actor.attemptsTo(TakeScreenShot.asEvidencie());
     }
 }

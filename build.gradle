@@ -38,6 +38,7 @@ dependencies {
             "io.appium:java-client:${appiumVersion}",
             "org.assertj:assertj-core:${assertJVersion}",
             "ch.qos.logback:logback-classic:${logbackVersion}"
+    implementation group: 'com.saucelabs', name: 'saucerest', version: '2.4.0'
     testImplementation "org.junit.platform:junit-platform-launcher:${junitPlatform}",
             "org.junit.platform:junit-platform-suite:${junitPlatform}",
             "org.junit.platform:junit-platform-suite-api:${junitPlatform}",

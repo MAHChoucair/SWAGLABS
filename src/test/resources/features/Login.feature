@@ -1,29 +1,18 @@
 @Login
-Feature: Se desea ingresar a la aplicacion Eribank
+Feature: Se desea ingresar a la aplicacion SawLab
   As Nicolas
-  I want login into eribank
+  I want login into SawLab
   So that I can used the app
 
   @LoginExitoso
-  Scenario Outline: Se desea realizar login exitoso eribank para poder verificar el balance
-    Given que Nicolas desea abrir la aplicacion eribank
+  Scenario Outline: Se desea realizar login exitoso SawLab para poder verificar el balance
+    Given que Melisa desea abrir la aplicacion SwagLab
     When se ingresan credenciales correctamente
       | usuario   | contrasena   |
       | <usuario> | <contrasena> |
-    Then podremos visualizar la pantalla de home y ver el mensaje <mensaje>
+    Then podremos visualizar en la pantalla de home el título PRODUCTS
 
     Examples:
-      | usuario | contrasena | mensaje         |
-      | company | company    | Your balance is |
+      | usuario       | contrasena   |
+      | standard_user | secret_sauce |
 
-  @LoginInvalido
-  Scenario Outline: Se desea realizar login exitoso eribank para poder verificar el balance
-    Given que Nicolas desea abrir la aplicacion eribank
-    When se ingresan credenciales incorrectas
-      | usuario   | contrasena   |
-      | <usuario> | <contrasena> |
-    Then podremos visualizar una alerta de error <mensaje>
-
-    Examples:
-      | usuario | contrasena | mensaje                       |
-      | company | compans    | Invalid username or password! |

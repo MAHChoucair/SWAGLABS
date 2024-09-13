@@ -25,10 +25,10 @@ public class LoginQuestion implements Question <Boolean> {
     @Override
     public Boolean answeredBy(Actor actor) {
         actor.attemptsTo(
-                WaitUntil.the(LOGIN_SUCCESSFULL_TXT, WebElementStateMatchers.isPresent()).forNoMoreThan(30).seconds(),
+                WaitUntil.the(PRODUCT_LABEL, WebElementStateMatchers.isPresent()).forNoMoreThan(30).seconds(),
                 TakeScreenshot.asEvidence()
         );
-        String actual = Text.of(LOGIN_SUCCESSFULL_TXT).answeredBy(actor);
-        return actual.contains(mensaje);
+        String actual = Text.of(PRODUCT_LABEL).answeredBy(actor);
+        return actual.equals(mensaje);
     }
 }

@@ -17,11 +17,9 @@ import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 
 public class LoginSteps {
 
-
-    @Given("^que (.*) desea abrir la aplicacion eribank$")
-    public void queDeseaabrirlaaplicacioneribank(String actor) {
-        Serenity.setSessionVariable("nombre").to(actor);
-        theActorCalled(actor).wasAbleTo(AbreLaApp.eribank());
+    @Given("^que (.*) desea abrir la aplicacion SwagLab$")
+    public void queMelisaDeseaAbrirLaAplicacionSwagLab(String usuario) {
+        theActorCalled(usuario).wasAbleTo(AbreLaApp.swagLabs());
     }
 
     @When("^se ingresan credenciales correctamente$")
@@ -29,17 +27,8 @@ public class LoginSteps {
         theActorInTheSpotlight().attemptsTo(IniciaSesion.correctamente(UserLogin.setData(data).get(0)));
     }
 
-    @Then("^podremos visualizar en la pantalla de home y ver el mensaje (.*)$")
-    public void podremosvisualizarenlapantalladehomeyverelmensaje$(String mensaje) {
+    @Then("^podremos visualizar en la pantalla de home el título (.*)$")
+    public void podremosVisualizarEnLaPantallaDeHomeA(String mensaje) {
         theActorInTheSpotlight().should(seeThat(LoginQuestion.verifiedLogin(mensaje)));
-    }
-
-    @When("^se ingresan credenciales incorrectas$" )
-    public void seIngresanCredencialesIncorrectas() {
-
-    }
-
-    @Then("^podremos visualizar una alerta de error (.*)$" )
-    public void podremosVisualizarUnaAlertaDeErrorMensaje(String mensaje) {
     }
 }
