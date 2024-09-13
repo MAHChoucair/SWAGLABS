@@ -32,18 +32,11 @@ public class IniciaSesion implements Task {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        if (TEXT_ALERT_OK.resolveFor(actor).isVisible()) {
-            System.out.println("Ingrese a if");
-            // Intenta hacer clic en el botón "OK"
-            actor.attemptsTo(
-                    WaitUntil.the(TEXT_ALERT_OK, WebElementStateMatchers.isVisible()).forNoMoreThan(30).seconds(),
-                    Click.on(TEXT_ALERT_OK)
-            );
-        }
-        System.out.println("No ingrese");
+        Tap.siElElementoEsVisible(TEXT_HOME);
+
         actor.attemptsTo(
-                Enter.theValue(loginData.getUsuario()).into(USERNAME_TXT),
-                Enter.theValue(loginData.getContrasena()).into(PASSWORD_TXT),
+                Enter.theValue(loginData.getUsuario()).into(USERNAME_INPUT),
+                Enter.theValue(loginData.getContrasena()).into(PASSWORD_INPUT),
                 Click.on(LOGIN_BTN)
         );
 

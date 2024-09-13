@@ -6,15 +6,13 @@ import org.openqa.selenium.By;
 
 public class UILogin {
 
-    public static final Target USERNAME_TXT = Target.the("Campo de texto username").located(AppiumBy.id("com.experitest.ExperiBank:id/usernameTextField"));
+    public static final Target USERNAME_INPUT = Target.the("campo de nombre de usuario")
+            .located(AppiumBy.accessibilityId("test-Username"));
 
-    public static final Target PASSWORD_TXT= Target.the("Campo de texto para el password").located(AppiumBy.id("com.experitest.ExperiBank:id/passwordTextField"));
+    public static final Target PASSWORD_INPUT= Target.the("Campo de texto para el password").located(AppiumBy.accessibilityId("test-Password"));
 
-    public static final Target LOGIN_BTN= Target.the("Botón para ingresar").located(AppiumBy.id("com.experitest.ExperiBank:id/loginButton"));
+    public static final Target LOGIN_BTN= Target.the("Botón para ingresar").located(AppiumBy.accessibilityId("test-LOGIN"));
 
-    public static final Target TEXT_ALERT= Target.the("Texto del home").located(AppiumBy.id("android:id/button1"));
-
-    public static final Target TEXT_ALERT_OK = Target.the("Botón OK de la alerta")
-            .locatedBy("//android.widget.Button[@text='OK']");
+    public static final Target TEXT_HOME= Target.the("Texto del Login").located(AppiumBy.xpath("//android.widget.ScrollView[@content-desc='test-Login']/android.view.ViewGroup/android.widget.ImageView[1]"));
 
 }
