@@ -17,37 +17,37 @@ import net.serenitybdd.screenplay.waits.WaitUntil;
 import java.util.List;
 
 public class Compra implements Task {
-    private List<String> productos;
+    private String productos;
 
-    public Compra(List<String> productos) {
+    public Compra(String productos) {
         this.productos = productos;
     }
 
-    public static Compra deProductos(List<String> productos) {
+    public static Compra deProductos(String productos) {
         return Tasks.instrumented(Compra.class, productos);
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        for (String sProducto : productos) {
+
             actor.attemptsTo(
                     WaitUntil.the(MODO_VISTA, isVisible()).forNoMoreThan(30).seconds(),
                     Click.on(MODO_VISTA),
-                    ScrollToElement.withText(sProducto)
+                    ScrollToElement.withText(productos)
             );
             // Busca el contenedor del producto basado en el nombre del producto
             Target PRODUCTO_CONTENEDOR = Target.the("contenedor del producto")
-                    .locatedBy("//android.widget.TextView[@text='" + sProducto + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']");
+                    .locatedBy("//android.widget.TextView[@text='" + productos + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']");
 
             // Busca el botón "ADD TO CART" dentro del contenedor encontrado
             Target ADD_CART_BUTTON = Target.the("botón de agregar al carrito")
-                    .locatedBy("//android.widget.TextView[@text='" + sProducto + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']//android.widget.TextView[@text='+']");
+                    .locatedBy("//android.widget.TextView[@text='" + productos + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']//android.widget.TextView[@text='+']");
 
             // Realiza las acciones sobre el contenedor y el botón del producto
             actor.attemptsTo(
                     Tap.siElElementoEsVisible(PRODUCTO_CONTENEDOR),  // Asegura que el contenedor esté visible y seleccionado
                     Click.on(ADD_CART_BUTTON)                        // Haz clic en el botón de "ADD TO CART"
             );
-        }
+
     }
 }
