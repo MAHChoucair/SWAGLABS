@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         features = {"src/test/resources/features"}
-        ,tags = "@LoginExitoso"
+        ,tags = "@CompraExitosa"
         ,glue = "stepdefinitions"
         ,plugin = {"pretty","json:target/cucumber-reports/cucumber.json"}
         ,snippets = CucumberOptions.SnippetType.CAMELCASE

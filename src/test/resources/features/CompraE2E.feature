@@ -1,3 +1,4 @@
+@Compra
 Feature: Compra de productos en SwagLabs
 
   Background:
@@ -7,17 +8,14 @@ Feature: Compra de productos en SwagLabs
       | standard_user | secret_sauce |
 
   @CompraExitosa
-  Scenario Outline: Se desea realizar una compra exitosa en SwagLab
+  Scenario: Se desea realizar una compra exitosa en SwagLab
     When realizo la compra de 3 productos aleatorios
         | producto                |
-        | <producto>              |
+        | Sauce Labs Backpack     |
+        | Sauce Labs Bike Light   |
+        | Sauce Labs Bolt T-Shirt |
     And nos dirigimos al carrito de compras
     Then Valido que los nombres de los productos agregados sean igual que en el carro
     And Valido que el precio de los productos agregados sean igual que en el carro
     And Valido que el numero de productos agregados debe ser igual que en el carrito
 
-    Examples:
-      | producto                |
-      | Sauce Labs Backpack     |
-      | Sauce Labs Bike Light   |
-      | Sauce Labs Bolt T-Shirt |
