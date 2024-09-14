@@ -31,29 +31,7 @@ Estructura del Proyecto
 
 Funcionalidades y Escenarios Cubiertos
 -
-**Funcionalidad: Inicio de Sesión**
 
-**Descripción:** Verifica la capacidad del usuario para iniciar sesión en la aplicación.  
-
-Escenarios:  
-1. [ ] Inicio de sesión exitoso con credenciales válidas
-2. [ ] Inicio de sesión fallido con credenciales inválidas
-
-**Funcionalidad: Realizar Pago**
-
-**Descripción:** Verifica la capacidad del usuario para realizar un pago.  
-
-Escenarios:  
-1. [ ] Pago exitoso con detalles válidos
-2. [ ] Pago fallido con detalles inválidos  
-
-**Funcionalidad: Solicitud de Hipoteca**
-
-**Descripción:** Verifica la capacidad del usuario para solicitar una hipoteca.  
-
-Escenarios:  
-1. [ ] Solicitud de hipoteca exitosa con datos válidos
-2. [ ] Solicitud de hipoteca fallida con datos inválidos
 
 
 Ejecución de pruebas
@@ -86,4 +64,3 @@ Aunque el proyecto por si solo genera la evidencia automaticamente una vez final
 Ejemplo comandos de ejecución:
 -
 ```   gradle clean test -Dtest.single=LoginRunner aggregate  ```  
-```   gradle clean test -Dcucumber.filter.tags="@Login" aggregate  ```

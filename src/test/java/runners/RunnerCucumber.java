@@ -31,7 +31,6 @@ public class RunnerCucumber {
 
    /* @BeforeClass
     public static void SetUp() throws Exception {
-
         MutableCapabilities caps = new MutableCapabilities();
         caps.setCapability("platformName", "Android");
         caps.setCapability("appium:app", "storage:filename=swaglabs.apk");  // The filename of the mobile app
@@ -50,10 +49,12 @@ public class RunnerCucumber {
         URL url = new URL("https://ondemand.us-west-1.saucelabs.com:443/wd/hub");
         driver = new AndroidDriver(url, caps);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
     }
 
     @AfterClass
     public static void CloseApp() {
+
         if (driver != null){
         driver.quit();}
     }*/
