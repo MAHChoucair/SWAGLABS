@@ -19,9 +19,9 @@ public class CompraSteps {
     public void realizoLaCompraDeProductosAleatorios(DataTable dataTable) {
         List<Map<String, String>> list = dataTable.asMaps();
         for (int i = 0; i < list.size(); i++) {
-            Logger.getAnonymousLogger().info("Selecciono el producto: " + list.get(i).get("Producto"));
+            Logger.getAnonymousLogger().info("Selecciono el producto: " + list.get(i).get("sProducto"));
             theActorInTheSpotlight().attemptsTo(
-                    (Compra.deProductos(list.get(i).get("Producto")))
+                    (Compra.deProductos(list.get(i).get("sProducto")))
             );
         }
     }
