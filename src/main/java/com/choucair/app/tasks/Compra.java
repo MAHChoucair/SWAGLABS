@@ -45,7 +45,7 @@ public class Compra implements Task {
 
             // Realiza las acciones sobre el contenedor y el botón del producto
             actor.attemptsTo(
-                    Tap.siElElementoEsVisible(PRODUCTO_CONTENEDOR),  // Asegura que el contenedor esté visible y seleccionado
+                    WaitUntil.the(ADD_CART_BUTTON, isVisible()).forNoMoreThan(30).seconds(),  // Asegura que el contenedor esté visible y seleccionado
                     Click.on(ADD_CART_BUTTON)                        // Haz clic en el botón de "ADD TO CART"
             );
 
