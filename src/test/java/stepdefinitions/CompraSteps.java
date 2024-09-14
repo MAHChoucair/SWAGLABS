@@ -4,6 +4,7 @@ import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 
 import com.choucair.app.tasks.Compra;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ public class CompraSteps {
     public void realizoLaCompraDeProductosAleatorios(DataTable dataTable) {
         List<Map<String, String>> list = dataTable.asMaps();
         Pattern validPattern = Pattern.compile("^[a-zA-Z0-9\\s]+$"); // Patrón para caracteres válidos
+        List<String> productosValidos = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
             String sProducto = list.get(i).get("Producto");
@@ -28,9 +30,7 @@ public class CompraSteps {
                 Matcher matcher = validPattern.matcher(sProducto);
                 if (matcher.matches()) {
                     Logger.getAnonymousLogger().info("Selecciono el producto: " + sProducto);
-                    theActorInTheSpotlight().attemptsTo(
-                            Compra.deProductos(sProducto)
-                    );
+                    productosValidos.add(sProducto);
                 } else {
                     Logger.getAnonymousLogger().warning("El producto en la fila " + i + " contiene caracteres no válidos: " + sProducto);
                 }
@@ -38,6 +38,10 @@ public class CompraSteps {
                 Logger.getAnonymousLogger().warning("El producto en la fila " + i + " es nulo o vacío.");
             }
         }
+
+        theActorInTheSpotlight().attemptsTo(
+                Compra.deProductos(productosValidos)
+        );
     }
 
     @And("nos dirigimos al carrito de compras")

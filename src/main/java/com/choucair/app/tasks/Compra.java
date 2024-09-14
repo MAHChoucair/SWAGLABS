@@ -14,36 +14,40 @@ import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
-public class Compra implements Task {
-    private String sProducto;
+import java.util.List;
 
-    public Compra(String sProducto) {
-        this.sProducto = sProducto;
+public class Compra implements Task {
+    private List<String> productos;
+
+    public Compra(List<String> productos) {
+        this.productos = productos;
     }
 
-    public static Compra deProductos(String sProducto) {
-        return Tasks.instrumented(Compra.class, sProducto);
+    public static Compra deProductos(List<String> productos) {
+        return Tasks.instrumented(Compra.class, productos);
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        actor.attemptsTo(
-                WaitUntil.the(MODO_VISTA, isVisible()).forNoMoreThan(30).seconds(),
-                Click.on(MODO_VISTA),
-                ScrollToElement.withText(sProducto)
-        );
-        // Busca el contenedor del producto basado en el nombre del producto
-        Target PRODUCTO_CONTENEDOR = Target.the("contenedor del producto")
-                .locatedBy("//android.widget.TextView[@text='" + sProducto + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']");
+        for (String sProducto : productos) {
+            actor.attemptsTo(
+                    WaitUntil.the(MODO_VISTA, isVisible()).forNoMoreThan(30).seconds(),
+                    Click.on(MODO_VISTA),
+                    ScrollToElement.withText(sProducto)
+            );
+            // Busca el contenedor del producto basado en el nombre del producto
+            Target PRODUCTO_CONTENEDOR = Target.the("contenedor del producto")
+                    .locatedBy("//android.widget.TextView[@text='" + sProducto + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']");
 
-        // Busca el botón "ADD TO CART" dentro del contenedor encontrado
-        Target ADD_CART_BUTTON = Target.the("botón de agregar al carrito")
-                .locatedBy("//android.widget.TextView[@text='" + sProducto + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']//android.widget.TextView[@text='+']");
+            // Busca el botón "ADD TO CART" dentro del contenedor encontrado
+            Target ADD_CART_BUTTON = Target.the("botón de agregar al carrito")
+                    .locatedBy("//android.widget.TextView[@text='" + sProducto + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']//android.widget.TextView[@text='+']");
 
-        // Realiza las acciones sobre el contenedor y el botón del producto
-        actor.attemptsTo(
-                Tap.siElElementoEsVisible(PRODUCTO_CONTENEDOR),  // Asegura que el contenedor esté visible y seleccionado
-                Click.on(ADD_CART_BUTTON)                        // Haz clic en el botón de "ADD TO CART"
-        );
+            // Realiza las acciones sobre el contenedor y el botón del producto
+            actor.attemptsTo(
+                    Tap.siElElementoEsVisible(PRODUCTO_CONTENEDOR),  // Asegura que el contenedor esté visible y seleccionado
+                    Click.on(ADD_CART_BUTTON)                        // Haz clic en el botón de "ADD TO CART"
+            );
+        }
     }
 }
