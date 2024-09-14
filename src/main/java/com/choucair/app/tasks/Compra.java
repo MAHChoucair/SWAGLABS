@@ -31,14 +31,8 @@ public class Compra implements Task {
     public <T extends Actor> void performAs(T actor) {
 
         actor.attemptsTo(
-                WaitUntil.the(MODO_VISTA, isVisible()).forNoMoreThan(30).seconds(),
-                Click.on(MODO_VISTA),
                 ScrollToElement.withText(productos)
         );
-
-        // Busca el contenedor del producto basado en el título del producto
-        Target PRODUCTO_CONTENEDOR = Target.the("contenedor del producto")
-                .locatedBy("//android.widget.TextView[contains(@text, '" + productos + "')]/ancestor::android.view.ViewGroup[contains(@content-desc, 'test-item')]");
 
         // Busca el botón "+" dentro del contenedor encontrado usando la tercera opción
         Target ADD_CART_BUTTON = Target.the("botón de agregar al carrito")
@@ -46,7 +40,7 @@ public class Compra implements Task {
 
         // Realiza las acciones sobre el contenedor y el botón del producto
         actor.attemptsTo(
-                WaitUntil.the(PRODUCTO_CONTENEDOR, isVisible()).forNoMoreThan(30).seconds(),
+               // WaitUntil.the(PRODUCTO_CONTENEDOR, isVisible()).forNoMoreThan(30).seconds(),
                 WaitUntil.the(ADD_CART_BUTTON, isVisible()).forNoMoreThan(30).seconds(),  // Asegura que el contenedor esté visible y seleccionado
                 Click.on(ADD_CART_BUTTON)                        // Haz clic en el botón de "ADD TO CART"
         );
