@@ -13,16 +13,30 @@ import io.cucumber.java.en.When;
 import io.cucumber.datatable.DataTable;
 
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CompraSteps {
     @When("^realizo la compra de 3 productos aleatorios$")
     public void realizoLaCompraDeProductosAleatorios(DataTable dataTable) {
         List<Map<String, String>> list = dataTable.asMaps();
+        Pattern validPattern = Pattern.compile("^[a-zA-Z0-9\\s]+$"); // Patrón para caracteres válidos
+
         for (int i = 0; i < list.size(); i++) {
-            Logger.getAnonymousLogger().info("Selecciono el producto: " + list.get(i).get("sProducto"));
-            theActorInTheSpotlight().attemptsTo(
-                    (Compra.deProductos(list.get(i).get("sProducto")))
-            );
+            String sProducto = list.get(i).get("Producto");
+            if (sProducto != null && !sProducto.isEmpty()) {
+                Matcher matcher = validPattern.matcher(sProducto);
+                if (matcher.matches()) {
+                    Logger.getAnonymousLogger().info("Selecciono el producto: " + sProducto);
+                    theActorInTheSpotlight().attemptsTo(
+                            Compra.deProductos(sProducto)
+                    );
+                } else {
+                    Logger.getAnonymousLogger().warning("El producto en la fila " + i + " contiene caracteres no válidos: " + sProducto);
+                }
+            } else {
+                Logger.getAnonymousLogger().warning("El producto en la fila " + i + " es nulo o vacío.");
+            }
         }
     }
 
