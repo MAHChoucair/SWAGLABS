@@ -1,3 +1,4 @@
+@Compra
 Feature: Compra de productos en SwagLabs
 
   Background:
@@ -17,5 +18,4 @@ Feature: Compra de productos en SwagLabs
     Then Valido que los nombres de los productos agregados sean igual que en el carro
     And Valido que el precio de los productos agregados sean igual que en el carro
     And Valido que el numero de productos agregados debe ser igual que en el carrito
-
 

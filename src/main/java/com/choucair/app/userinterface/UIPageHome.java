@@ -13,6 +13,7 @@ public class UIPageHome {
             Target.the("Items").locatedBy("//android.widget.TextView[@text='{0}']");
     //public static Target ADD_CART_BTN =
     //        Target.the("Add Cart Btn").locatedBy("//android.widget.TextView[@text='ADD TO CART'])[{0}]");
+
     public static final Target CART_BTN =
             Target.the("Cart Btn").located(AppiumBy.xpath("//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.ImageView"));
 }
