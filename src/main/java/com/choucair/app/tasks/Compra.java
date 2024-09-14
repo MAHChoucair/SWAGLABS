@@ -7,6 +7,7 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisi
 import com.choucair.app.interactions.ScrollToElement;
 import com.choucair.moviles.libreria.interactions.choucair.builders.Tap;
 
+import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
@@ -38,12 +39,20 @@ public class Compra implements Task {
         Target ADD_CART_BUTTON = Target.the("botón de agregar al carrito")
                 .locatedBy("//android.widget.TextView[contains(@text, '" + productos + "')]/following-sibling::android.view.ViewGroup//android.widget.TextView[@text='+']");
 
+        // Busca el precio del producto
+        Target PRODUCT_PRICE = Target.the("precio del producto")
+                .locatedBy("//android.widget.TextView[contains(@text, '" + productos + "')]/following-sibling::android.widget.TextView[contains(@text, '$')]");
+
         // Realiza las acciones sobre el contenedor y el botón del producto
         actor.attemptsTo(
                // WaitUntil.the(PRODUCTO_CONTENEDOR, isVisible()).forNoMoreThan(30).seconds(),
                 WaitUntil.the(ADD_CART_BUTTON, isVisible()).forNoMoreThan(30).seconds(),  // Asegura que el contenedor esté visible y seleccionado
                 Click.on(ADD_CART_BUTTON)                        // Haz clic en el botón de "ADD TO CART"
         );
+
+        // Almacena el precio del producto en una variable de sesión con un identificador único
+        String precio = PRODUCT_PRICE.resolveFor(actor).getText().replace("$", "");
+        Serenity.setSessionVariable(productos + "-PRECIO").to(precio);
 
     }
 }

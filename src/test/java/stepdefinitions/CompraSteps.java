@@ -6,6 +6,7 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisi
 
 import com.choucair.app.tasks.Compra;
 
+import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
@@ -19,8 +20,6 @@ import io.cucumber.java.en.When;
 import io.cucumber.datatable.DataTable;
 
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CompraSteps {
     @When("^realizo la compra de 3 productos aleatorios$")
@@ -30,14 +29,18 @@ public class CompraSteps {
                 Click.on(MODO_VISTA)
         );
         List<Map<String, String>> list = dataTable.asMaps();
+        List<String> productosValidosList = new ArrayList<>();
+
         for (int i = 0; i < list.size(); i++) {
             String productosValidos = list.get(i).get("Producto");
+            productosValidosList.add(productosValidos);
             Logger.getAnonymousLogger().info("Selecciono el producto: " + productosValidos);
             theActorInTheSpotlight().attemptsTo(
-                   Compra.deProductos(productosValidos)
+                    Compra.deProductos(productosValidos)
 
             );
         }
+        Serenity.setSessionVariable("productosValidos").to(productosValidosList);
     }
 
     @And("nos dirigimos al carrito de compras")
