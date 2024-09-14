@@ -42,7 +42,7 @@ public class Compra implements Task {
 
         // Busca el botón "+" dentro del contenedor encontrado
         Target ADD_CART_BUTTON = Target.the("botón de agregar al carrito")
-                .locatedBy("//android.widget.TextView[@content-desc='test-item title' and @text='" + productos + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']//android.view.ViewGroup[@content-desc='test-ADD TO CART']//android.widget.TextView[@text='+']");
+                .locatedBy("//android.widget.TextView[@content-desc='test-item title' and @text='" + productos + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']//android.view.ViewGroup[@content-desc='test-ADD TO CART']/android.widget.TextView[@text='+']");
             // Realiza las acciones sobre el contenedor y el botón del producto
             actor.attemptsTo(
                     WaitUntil.the(ADD_CART_BUTTON, isVisible()).forNoMoreThan(30).seconds(),  // Asegura que el contenedor esté visible y seleccionado
