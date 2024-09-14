@@ -21,27 +21,14 @@ public class CompraSteps {
     @When("^realizo la compra de 3 productos aleatorios$")
     public void realizoLaCompraDeProductosAleatorios(DataTable dataTable) {
         List<Map<String, String>> list = dataTable.asMaps();
-        Pattern validPattern = Pattern.compile("^[a-zA-Z0-9\\s]+$"); // Patrón para caracteres válidos
-        List<String> productosValidos = new ArrayList<>();
-
         for (int i = 0; i < list.size(); i++) {
-            String sProducto = list.get(i).get("Producto");
-            if (sProducto != null && !sProducto.isEmpty()) {
-                Matcher matcher = validPattern.matcher(sProducto);
-                if (matcher.matches()) {
-                    Logger.getAnonymousLogger().info("Selecciono el producto: " + sProducto);
-                    productosValidos.add(sProducto);
-                } else {
-                    Logger.getAnonymousLogger().warning("El producto en la fila " + i + " contiene caracteres no válidos: " + sProducto);
-                }
-            } else {
-                Logger.getAnonymousLogger().warning("El producto en la fila " + i + " es nulo o vacío.");
-            }
-        }
+            String productosValidos = list.get(i).get("Producto");
+            Logger.getAnonymousLogger().info("Selecciono el producto: " + productosValidos);
+            theActorInTheSpotlight().attemptsTo(
+                    Compra.deProductos(productosValidos)
 
-        theActorInTheSpotlight().attemptsTo(
-                Compra.deProductos(productosValidos)
-        );
+            );
+        }
     }
 
     @And("nos dirigimos al carrito de compras")
