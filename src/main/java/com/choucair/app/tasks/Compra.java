@@ -35,14 +35,14 @@ public class Compra implements Task {
                     Click.on(MODO_VISTA),
                     ScrollToElement.withText(productos)
             );
-            // Busca el contenedor del producto basado en el nombre del producto
-            Target PRODUCTO_CONTENEDOR = Target.the("contenedor del producto")
-                    .locatedBy("//android.widget.TextView[@text='" + productos + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']");
 
-            // Busca el botón "ADD TO CART" dentro del contenedor encontrado
-            Target ADD_CART_BUTTON = Target.the("botón de agregar al carrito")
-                    .locatedBy("//android.widget.TextView[@text='" + productos + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']//android.widget.TextView[@text='+']");
+        // Busca el contenedor del producto basado en el título del producto
+        Target PRODUCTO_CONTENEDOR = Target.the("contenedor del producto")
+                .locatedBy("//android.widget.TextView[@content-desc='test-item title' and @text='" + productos + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']");
 
+        // Busca el botón "+" dentro del contenedor encontrado
+        Target ADD_CART_BUTTON = Target.the("botón de agregar al carrito")
+                .locatedBy("//android.widget.TextView[@content-desc='test-item title' and @text='" + productos + "']/ancestor::android.view.ViewGroup[@content-desc='test-item']//android.view.ViewGroup[@content-desc='test-ADD TO CART']//android.widget.TextView[@text='+']");
             // Realiza las acciones sobre el contenedor y el botón del producto
             actor.attemptsTo(
                     Tap.siElElementoEsVisible(PRODUCTO_CONTENEDOR),  // Asegura que el contenedor esté visible y seleccionado
