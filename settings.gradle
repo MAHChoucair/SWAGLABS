@@ -1,4 +1,4 @@
-rootProject.name = 'SauceLabEriBank'
+rootProject.name = 'SwagLabs'
 buildCache {
     local {
         enabled = true

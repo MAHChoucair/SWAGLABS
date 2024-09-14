@@ -12,7 +12,7 @@ public class UIPageHome {
     public static final Target ITEMS_LABEL =
             Target.the("Items").located(AppiumBy.xpath("//android.widget.TextView[@text='{0}']"));
     public static final Target ADD_CART_BTN =
-            Target.the("Add Cart Btn").located(AppiumBy.xpath("//android.widget.TextView[@text='ADD TO CART'])[{0}]"));
+            Target.the("Add Cart Btn").located(AppiumBy.xpath("(//android.widget.TextView[@text='ADD TO CART'])[{0}]"));
     public static final Target CART_BTN =
             Target.the("Cart Btn").located(AppiumBy.xpath("//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.ImageView"));
 }
