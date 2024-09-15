@@ -76,7 +76,12 @@ public class RevisaCarrito implements Task {
 
         for (String producto : productosValidosList) {
             String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
-            actor.attemptsTo(ScrollToElement.withText(producto));
+
+            // Realiza un clic en una parte de la pantalla para forzar el desplazamiento
+            actor.attemptsTo(Click.on(Target.the("parte de la pantalla").locatedBy("//android.view.ViewGroup[@content-desc='test-Item']")),
+                    ScrollToElement.withText(producto)
+            );
+
             Target PRODUCT_PRICE = Target.the("precio del producto").locatedBy("//android.widget.TextView[contains(@text, '" + producto + "')]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup//android.widget.TextView[contains(@text, '$')]");
             actor.attemptsTo(WaitUntil.the(PRODUCT_PRICE, isVisible()).forNoMoreThan(30).seconds());
 
