@@ -26,8 +26,7 @@ public class SwipeToElement implements Interaction {
         WebElement element = actor.abilityTo(net.serenitybdd.screenplay.abilities.BrowseTheWeb.class)
                 .getDriver().findElement(
                         MobileBy.AndroidUIAutomator(
-                                "new UiScrollable(new UiSelector().scrollable(true).resourceId(\"android.view.ViewGroup\"))" +
-                                        ".scrollIntoView(new UiSelector().descriptionContains(\"test-Item\"))" +
+                                "new UiScrollable(new UiSelector().scrollable(true).description(\"test-Cart Content\"))" +
                                         ".scrollIntoView(new UiSelector().text(\"" + productName + "\"));"
                         )
                 );
