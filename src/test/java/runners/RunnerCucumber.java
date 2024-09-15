@@ -25,11 +25,11 @@ import java.util.concurrent.TimeUnit;
         ,snippets = CucumberOptions.SnippetType.CAMELCASE
 )
 public class RunnerCucumber {
-    private static AndroidDriver driver;
+    /*private static AndroidDriver driver;
 
     private Actions actions;
 
-   /* @BeforeClass
+    @BeforeClass
     public static void SetUp() throws Exception {
         MutableCapabilities caps = new MutableCapabilities();
         caps.setCapability("platformName", "Android");

@@ -22,6 +22,7 @@ import io.cucumber.datatable.DataTable;
 import java.util.logging.Logger;
 
 public class CompraSteps {
+
     @When("^realizo la compra de 3 productos aleatorios$")
     public void realizoLaCompraDeProductosAleatorios(DataTable dataTable) {
         theActorInTheSpotlight().attemptsTo(
