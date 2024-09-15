@@ -10,6 +10,7 @@ import static com.choucair.app.userinterface.UIPageHome.CART_BTN;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 import com.choucair.app.interactions.ScrollToElement;
+import com.choucair.app.interactions.SwipeToElement;
 import com.choucair.moviles.libreria.interactions.choucair.ScrollTo;
 
 import net.serenitybdd.core.Serenity;
@@ -77,10 +78,8 @@ public class RevisaCarrito implements Task {
         for (String producto : productosValidosList) {
             String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
 
-            // Realiza un clic en una parte de la pantalla para forzar el desplazamiento
-            actor.attemptsTo(Click.on(Target.the("parte de la pantalla").locatedBy("//android.view.ViewGroup[@content-desc='test-Item']")),
-                    ScrollToElement.withText(producto)
-            );
+            // Realiza el scroll hacia el producto
+            actor.attemptsTo(SwipeToElement.withText(producto));
 
             Target PRODUCT_PRICE = Target.the("precio del producto").locatedBy("//android.widget.TextView[contains(@text, '" + producto + "')]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup//android.widget.TextView[contains(@text, '$')]");
             actor.attemptsTo(WaitUntil.the(PRODUCT_PRICE, isVisible()).forNoMoreThan(30).seconds());
