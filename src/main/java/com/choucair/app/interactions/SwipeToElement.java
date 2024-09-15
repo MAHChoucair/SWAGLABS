@@ -9,9 +9,12 @@ import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 import net.serenitybdd.screenplay.waits.WaitUntil;
+import org.openqa.selenium.WebDriver;
 import io.appium.java_client.android.AndroidDriver;
 import java.time.Duration;
 import net.serenitybdd.screenplay.targets.Target;
+import net.thucydides.core.webdriver.WebDriverFacade;
+
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 public class SwipeToElement implements Interaction {
@@ -28,7 +31,8 @@ public class SwipeToElement implements Interaction {
 
     @Override
     public <T extends Actor> void performAs(T actor) {
-        AndroidDriver driver = (AndroidDriver) BrowseTheWeb.as(actor).getDriver();
+        WebDriver webDriver = BrowseTheWeb.as(actor).getDriver();
+        AndroidDriver driver = (AndroidDriver) ((WebDriverFacade) webDriver).getProxiedDriver();
         TouchAction action = new TouchAction(driver);
 
         // Realiza un swipe hacia arriba
