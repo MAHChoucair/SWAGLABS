@@ -1,16 +1,27 @@
 package com.choucair.app.tasks;
 
+import org.openqa.selenium.WebElement;
+import io.appium.java_client.android.AndroidDriver;
+
 import static com.choucair.app.userinterface.UICartHome.*;
 import static com.choucair.app.userinterface.UIPageHome.CART_BTN;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
+import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
+import org.openqa.selenium.By;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 public class RevisaCarrito implements Task {
+    private AndroidDriver driver;
     public static RevisaCarrito deCompras() {
         return Tasks.instrumented(RevisaCarrito.class);
     }
@@ -25,6 +36,50 @@ public class RevisaCarrito implements Task {
         actor.attemptsTo(
                 WaitUntil.the(YOUR_CART_LABEL, isVisible()).forNoMoreThan(30).seconds()
         );
+
+        // Localiza todos los elementos que contienen los nombres de los productos
+        List<WebElement> productNames = driver.findElements(By.xpath("//android.view.ViewGroup[@content-desc='test-item']//android.widget.TextView[contains(@text, '')]"));
+
+        // Crea una lista para almacenar los nombres de productos
+        List<String> productNamesList = new ArrayList<>();
+
+        // Itera sobre los elementos y extrae los nombres de los productos
+        for (WebElement productNameElement : productNames) {
+            String productName = productNameElement.getText();
+            productNamesList.add(productName);
+        }
+
+        // Obtiene la lista de productos seleccionados inicialmente
+        List<String> productosValidosList = Serenity.sessionVariableCalled("productosValidos");
+
+        // Valida que los nombres de los productos en el carrito coincidan con los nombres de los productos seleccionados inicialmente
+        for (String name : productNamesList) {
+            if (!productosValidosList.contains(name)) {
+                Logger.getAnonymousLogger().warning("Producto en el carrito no coincide: " + name);
+            } else {
+                Logger.getAnonymousLogger().info("Producto en el carrito coincide: " + name);
+            }
+        }
+
+        // Valida que la cantidad de productos en el carrito sea la esperada
+        if (productNamesList.size() != productosValidosList.size()) {
+            Logger.getAnonymousLogger().warning("La cantidad de productos en el carrito no coincide con la cantidad de productos seleccionados inicialmente.");
+        } else {
+            Logger.getAnonymousLogger().info("La cantidad de productos en el carrito coincide con la cantidad de productos seleccionados inicialmente.");
+        }
+
+        // Valida que los precios de los productos en el carrito coincidan con los precios almacenados
+        for (String producto : productosValidosList) {
+            String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
+            WebElement precioElemento = driver.findElement(By.xpath("//android.view.ViewGroup[@content-desc='test-item']//android.widget.TextView[contains(@text, '" + producto + "')]/following-sibling::android.view.ViewGroup[@content-desc='test-Price']//android.widget.TextView[contains(@text, '$')]"));
+            String precioActual = precioElemento.getText().replace("$", "");
+
+            if (!precioEsperado.equals(precioActual)) {
+                Logger.getAnonymousLogger().warning("El precio del producto " + producto + " no coincide. Esperado: " + precioEsperado + ", Actual: " + precioActual);
+            } else {
+                Logger.getAnonymousLogger().info("El precio del producto " + producto + " coincide. Precio: " + precioActual);
+            }
+        }
 
         actor.attemptsTo(
                 Click.on(CHECKOUT_BTN)
