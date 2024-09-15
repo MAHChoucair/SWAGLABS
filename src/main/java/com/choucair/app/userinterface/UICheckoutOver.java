@@ -22,4 +22,6 @@ public class UICheckoutOver {
             Target.the("Finish Btn").located(AppiumBy.accessibilityId("test-FINISH"));
     private static final Target COMPLETE_LABEL =
             Target.the("Thank You Label").located(AppiumBy.xpath("//android.widget.TextView[@text='THANK YOU FOR YOU ORDER']"));
+    private static final Target BACK_HOME_BTN =
+            Target.the("Back Home Btn").located(AppiumBy.xpath("//android.widget.TextView[@text='BACK HOME']"));
 }

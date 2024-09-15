@@ -19,6 +19,7 @@ public class LoginSteps {
 
     @Given("^que (.*) desea abrir la aplicacion SwagLab$")
     public void queMelisaDeseaAbrirLaAplicacionSwagLab(String usuario) {
+        Serenity.setSessionVariable("firstName").to(usuario);
         theActorCalled(usuario).wasAbleTo(AbreLaApp.swagLabs());
     }
 

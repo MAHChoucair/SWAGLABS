@@ -136,11 +136,11 @@ public class RevisaCarrito implements Task {
         }
 
         // Si todas las validaciones son correctas, realiza el clic en el botón de checkout
-        /*if (nombresCoinciden && cantidadesCoinciden && preciosCoinciden) {
+        if (nombresCoinciden && cantidadesCoinciden && preciosCoinciden) {
             actor.attemptsTo(
                     ScrollToElement.withText("CHECKOUT"),
                     Click.on(CHECKOUT_BTN)
             );
-        }*/
+        }
     }
 }

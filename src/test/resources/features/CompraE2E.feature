@@ -14,8 +14,10 @@ Feature: Compra de productos en SwagLabs
       | Sauce Labs Backpack   |
       | Sauce Labs Bike Light |
       | Sauce Labs Onesie     |
-    And nos dirigimos al carrito de compras
-    Then Valido que los nombres de los productos agregados sean igual que en el carro
-    And Valido que el precio de los productos agregados sean igual que en el carro
-    And Valido que el numero de productos agregados debe ser igual que en el carrito
+    And nos dirigimos al carrito de compras a validar nuestra compra
+    And ingreso los siguientes datos en checkout_information
+      | lastName | postalCode |
+      | Aguirre  | 14001      |
+    And confirmo mi compra en checkout_overview
+    Then debería mostrar el mensaje de "Thank you for you order"
 
