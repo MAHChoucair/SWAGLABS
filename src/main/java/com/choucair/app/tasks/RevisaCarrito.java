@@ -42,7 +42,7 @@ public class RevisaCarrito implements Task {
         );
 
         // Localiza todos los elementos que contienen los nombres de los productos
-        Target PRODUCT_NAME = Target.the("nombre del producto").locatedBy("//android.view.ViewGroup[@content-desc='test-item']//android.widget.TextView[contains(@text, '')]");
+        Target PRODUCT_NAME = Target.the("nombre del producto").locatedBy("//android.view.ViewGroup[@content-desc='test-Item']//android.view.ViewGroup[@content-desc='test-Description']/android.widget.TextView[1]");
         ListOfWebElementFacades productNames = PRODUCT_NAME.resolveAllFor(actor);
 
         // Crea una lista para almacenar los nombres de productos
