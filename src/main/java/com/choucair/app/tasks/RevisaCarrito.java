@@ -21,11 +21,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class RevisaCarrito implements Task {
-    private AndroidDriver driver;
-
-    public RevisaCarrito(AndroidDriver driver) {
-        this.driver = driver;
-    }
+    AndroidDriver driver;
 
     public static RevisaCarrito deCompras() {
         return Tasks.instrumented(RevisaCarrito.class);
