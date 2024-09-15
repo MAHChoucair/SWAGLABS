@@ -78,7 +78,7 @@ public class RevisaCarrito implements Task {
             String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
 
             // Realiza un clic en una parte de la pantalla para forzar el desplazamiento
-            actor.attemptsTo(Click.on(Target.the("parte de la pantalla").locatedBy("//android.view.ViewGroup[@content-desc='test-Item']")),
+            actor.attemptsTo(Click.on(Target.the("parte de la pantalla").locatedBy("(//android.view.ViewGroup[@content-desc='test-Item'])[1]")),
                     ScrollToElement.withText(producto)
             );
 
