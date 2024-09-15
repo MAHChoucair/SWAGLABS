@@ -4,7 +4,7 @@ import static com.choucair.app.userinterface.UIPageHome.MODO_VISTA;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
-import com.choucair.app.tasks.Compra;
+import com.choucair.app.tasks.*;
 
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.actions.Click;
@@ -45,7 +45,7 @@ public class CompraSteps {
 
     @And("nos dirigimos al carrito de compras")
     public void nosDirigimosAlCarritoDeCompras() {
-
+        theActorInTheSpotlight().attemptsTo(RevisaCarrito.deCompras());
     }
 
     @Then("Valido que los nombres de los productos agregados sean igual que en el carro")
