@@ -73,7 +73,7 @@ public class RevisaCarrito implements Task {
 
         for (String producto : productosValidosList) {
             String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
-            Target PRODUCT_PRICE = Target.the("precio del producto").locatedBy("//android.view.ViewGroup[@content-desc='test-item']//android.widget.TextView[contains(@text, '" + producto + "')]/following-sibling::android.view.ViewGroup[@content-desc='test-Price']//android.widget.TextView[contains(@text, '$')]");
+            Target PRODUCT_PRICE = Target.the("precio del producto").locatedBy("//android.widget.TextView[contains(@text, '" + producto + "')]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup//android.widget.TextView[contains(@text, '$')]");
             String precioActual = PRODUCT_PRICE.resolveFor(actor).getText().replace("$", "");
 
             if (!precioEsperado.equals(precioActual)) {
