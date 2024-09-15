@@ -91,9 +91,9 @@ public class RevisaCarrito implements Task {
         // Obtiene la lista de productos seleccionados inicialmente
         List<String> productosValidosList = Serenity.sessionVariableCalled("productosValidos");
 
-        boolean nombresCoinciden = true;
         boolean cantidadesCoinciden = productNamesList.size() == productosValidosList.size();
         assertTrue(cantidadesCoinciden, "La cantidad de productos no coinciden");
+        boolean nombresCoinciden = true;
         boolean preciosCoinciden = true;
 
         // Valida que los nombres de los productos en el carrito coincidan con los nombres de los productos seleccionados inicialmente
@@ -105,7 +105,6 @@ public class RevisaCarrito implements Task {
                 Logger.getAnonymousLogger().info("Producto en el carrito coincide: " + name);
             }
         }
-
 
         for (String producto : productNamesList) {
             String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
@@ -137,11 +136,11 @@ public class RevisaCarrito implements Task {
         }
 
         // Si todas las validaciones son correctas, realiza el clic en el botón de checkout
-        /*if (nombresCoinciden && cantidadesCoinciden && preciosCoinciden) {
+        if (nombresCoinciden && cantidadesCoinciden && preciosCoinciden) {
             actor.attemptsTo(
                     ScrollToElement.withText("CHECKOUT"),
                     Click.on(CHECKOUT_BTN)
             );
-        }*/
+        }
     }
 }

@@ -44,22 +44,21 @@ public class CompraSteps {
         Serenity.setSessionVariable("productosValidos").to(productosValidosList);
     }
 
-    @And("nos dirigimos al carrito de compras")
+    @And("^nos dirigimos al carrito de compras a validar nuestra compra$")
     public void nosDirigimosAlCarritoDeCompras() {
         theActorInTheSpotlight().attemptsTo(RevisaCarrito.deCompras());
     }
 
-    @Then("Valido que los nombres de los productos agregados sean igual que en el carro")
-    public void validoQueLosNombresDeLosProductosAgregadosSeanIgualQueEnElCarro() {
+    @And("^ingreso los siguientes datos en checkout_information$")
+    public void ingresoLosSiguientesDatosEnCheckout_information() {
+    }
+
+    @And("^confirmo mi compra en checkout_overview$")
+    public void confirmoMiCompraEnCheckout_overview() {
 
     }
 
-    @And("Valido que el precio de los productos agregados sean igual que en el carro")
-    public void validoQueElPrecioDeLosProductosAgregadosSeanIgualQueEnElCarro() {
-
-    }
-
-    @And("Valido que el numero de productos agregados debe ser igual que en el carrito")
-    public void validoQueElNumeroDeProductosAgregadosDebeSerIgualQueEnElCarrito() {
+    @Then("^debería mostrar el mensaje de (.*)$")
+    public void deberíaMostrarElMensajeDe(String mensaje) {
     }
 }
