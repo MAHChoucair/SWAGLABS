@@ -9,6 +9,9 @@ import static com.choucair.app.userinterface.UICartHome.*;
 import static com.choucair.app.userinterface.UIPageHome.CART_BTN;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
+import com.choucair.app.interactions.ScrollToElement;
+import com.choucair.moviles.libreria.interactions.choucair.ScrollTo;
+
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.pages.ListOfWebElementFacades;
 import net.serenitybdd.screenplay.Actor;
@@ -73,6 +76,7 @@ public class RevisaCarrito implements Task {
 
         for (String producto : productosValidosList) {
             String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
+            ScrollToElement.withText(producto);
             Target PRODUCT_PRICE = Target.the("precio del producto").locatedBy("//android.widget.TextView[contains(@text, '" + producto + "')]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup//android.widget.TextView[contains(@text, '$')]");
             String precioActual = PRODUCT_PRICE.resolveFor(actor).getText().replace("$", "");
 
@@ -87,6 +91,7 @@ public class RevisaCarrito implements Task {
         // Si todas las validaciones son correctas, realiza el clic en el botón de checkout
         if (nombresCoinciden && cantidadesCoinciden && preciosCoinciden) {
             actor.attemptsTo(
+                    ScrollToElement.withText("CHECKOUT"),
                     Click.on(CHECKOUT_BTN)
             );
         }
