@@ -22,6 +22,11 @@ import java.util.logging.Logger;
 
 public class RevisaCarrito implements Task {
     private AndroidDriver driver;
+
+    public RevisaCarrito(AndroidDriver driver) {
+        this.driver = driver;
+    }
+
     public static RevisaCarrito deCompras() {
         return Tasks.instrumented(RevisaCarrito.class);
     }
@@ -52,20 +57,18 @@ public class RevisaCarrito implements Task {
         // Obtiene la lista de productos seleccionados inicialmente
         List<String> productosValidosList = Serenity.sessionVariableCalled("productosValidos");
 
+        boolean nombresCoinciden = true;
+        boolean cantidadesCoinciden = productNamesList.size() == productosValidosList.size();
+        boolean preciosCoinciden = true;
+
         // Valida que los nombres de los productos en el carrito coincidan con los nombres de los productos seleccionados inicialmente
         for (String name : productNamesList) {
             if (!productosValidosList.contains(name)) {
                 Logger.getAnonymousLogger().warning("Producto en el carrito no coincide: " + name);
+                nombresCoinciden = false;
             } else {
                 Logger.getAnonymousLogger().info("Producto en el carrito coincide: " + name);
             }
-        }
-
-        // Valida que la cantidad de productos en el carrito sea la esperada
-        if (productNamesList.size() != productosValidosList.size()) {
-            Logger.getAnonymousLogger().warning("La cantidad de productos en el carrito no coincide con la cantidad de productos seleccionados inicialmente.");
-        } else {
-            Logger.getAnonymousLogger().info("La cantidad de productos en el carrito coincide con la cantidad de productos seleccionados inicialmente.");
         }
 
         // Valida que los precios de los productos en el carrito coincidan con los precios almacenados
@@ -76,13 +79,17 @@ public class RevisaCarrito implements Task {
 
             if (!precioEsperado.equals(precioActual)) {
                 Logger.getAnonymousLogger().warning("El precio del producto " + producto + " no coincide. Esperado: " + precioEsperado + ", Actual: " + precioActual);
+                preciosCoinciden = false;
             } else {
                 Logger.getAnonymousLogger().info("El precio del producto " + producto + " coincide. Precio: " + precioActual);
             }
         }
 
-        actor.attemptsTo(
-                Click.on(CHECKOUT_BTN)
-        );
+        // Si todas las validaciones son correctas, realiza el clic en el botón de checkout
+        if (nombresCoinciden && cantidadesCoinciden && preciosCoinciden) {
+            actor.attemptsTo(
+                    Click.on(CHECKOUT_BTN)
+            );
+        }
     }
 }
