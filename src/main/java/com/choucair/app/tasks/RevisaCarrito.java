@@ -48,6 +48,7 @@ public class RevisaCarrito implements Task {
         // Localiza todos los elementos que contienen los nombres de los productos
         Target PRODUCT_NAME = Target.the("nombre del producto").locatedBy("//android.view.ViewGroup[@content-desc='test-Item']//android.view.ViewGroup[@content-desc='test-Description']/android.widget.TextView[1]");
         ListOfWebElementFacades productNames = PRODUCT_NAME.resolveAllFor(actor);
+        actor.attemptsTo(Click.on(PRODUCT_NAME));
 
         // Crea una lista para almacenar los nombres de productos
         List<String> productNamesList = new ArrayList<>();
@@ -81,7 +82,7 @@ public class RevisaCarrito implements Task {
             String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
 
             // Realiza el scroll hacia el producto
-            actor.attemptsTo(SwipeToElement.withText(producto, maxSwipeAttempts));
+            actor.attemptsTo(ScrollToElement.withText(producto));
 
             Target PRODUCT_PRICE = Target.the("precio del producto").locatedBy("//android.widget.TextView[contains(@text, '" + producto + "')]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup//android.widget.TextView[contains(@text, '$')]");
             actor.attemptsTo(WaitUntil.the(PRODUCT_PRICE, isVisible()).forNoMoreThan(30).seconds());
