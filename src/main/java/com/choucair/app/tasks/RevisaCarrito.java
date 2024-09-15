@@ -113,7 +113,17 @@ public class RevisaCarrito implements Task {
             actor.attemptsTo(SwipeToElement.withName(producto));
 
             Target PRODUCT_PRICE = Target.the("precio del producto").locatedBy("//android.widget.TextView[contains(@text, '" + producto + "')]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup//android.widget.TextView[contains(@text, '$')]");
-            actor.attemptsTo(WaitUntil.the(PRODUCT_PRICE, isVisible()).forNoMoreThan(30).seconds());
+
+            // Desplázate hasta que el precio del producto sea visible
+            while (!PRODUCT_PRICE.resolveFor(actor).isVisible()) {
+                BrowseTheWeb.as(actor).getDriver().findElement(
+                        MobileBy.AndroidUIAutomator(
+                                "new UiScrollable(new UiSelector().scrollable(true).description(\"test-Cart Content\"))" +
+                                        ".scrollForward();"
+                        )
+                );
+                actor.attemptsTo(WaitUntil.the(PRODUCT_PRICE, isVisible()).forNoMoreThan(30).seconds());
+            }
 
             String precioActual = PRODUCT_PRICE.resolveFor(actor).getText().replace("$", "");
 
@@ -124,7 +134,6 @@ public class RevisaCarrito implements Task {
                 Logger.getAnonymousLogger().info("El precio del producto " + producto + " coincide. Precio: " + precioActual);
             }
         }
-
 
         // Si todas las validaciones son correctas, realiza el clic en el botón de checkout
         /*if (nombresCoinciden && cantidadesCoinciden && preciosCoinciden) {
