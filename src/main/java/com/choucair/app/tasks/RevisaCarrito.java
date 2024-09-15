@@ -78,11 +78,11 @@ public class RevisaCarrito implements Task {
                     .isPresent();
 
             if (!isCheckoutVisible) {
-                // Realiza un desplazamiento dentro del contenedor que agrupa los productos
+                // Utiliza UiScrollable para desplazarte dentro del contenedor de carrito
                 BrowseTheWeb.as(actor).getDriver().findElement(
                         MobileBy.AndroidUIAutomator(
-                                "new UiScrollable(new UiSelector()" +
-                                        ".scrollable(true)).scrollForward();"
+                                "new UiScrollable(new UiSelector().scrollable(true).description(\"test-Cart Content\"))" +
+                                        ".scrollForward();"
                         )
                 );
             }
