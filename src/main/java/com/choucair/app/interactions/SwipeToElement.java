@@ -20,27 +20,43 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisi
 public class SwipeToElement implements Interaction {
 
     private final String text;
+    private final int maxSwipeAttempts;
 
-    public SwipeToElement(String text) {
+    public SwipeToElement(String text, int maxSwipeAttempts) {
         this.text = text;
+        this.maxSwipeAttempts = maxSwipeAttempts;
     }
 
-    public static SwipeToElement withText(String text) {
-        return Tasks.instrumented(SwipeToElement.class, text);
+    public static SwipeToElement withText(String text, int maxSwipeAttempts) {
+        return Tasks.instrumented(SwipeToElement.class, text, maxSwipeAttempts);
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
         WebDriver webDriver = BrowseTheWeb.as(actor).getDriver();
         AndroidDriver driver = (AndroidDriver) ((WebDriverFacade) webDriver).getProxiedDriver();
-        TouchAction action = new TouchAction(driver);
 
-        // Realiza un swipe hacia arriba
-        action.press(PointOption.point(500, 1500))
-                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
-                .moveTo(PointOption.point(500, 500))
-                .release()
-                .perform();
+        int attempts = 0;
+        boolean isElementVisible = false;
+
+        while (attempts < maxSwipeAttempts && !isElementVisible) {
+            // Verifica si el elemento ya es visible
+            isElementVisible = !driver.findElements(MobileBy.AndroidUIAutomator(
+                    "new UiSelector().textContains(\"" + text + "\")")).isEmpty();
+
+            if (!isElementVisible) {
+                TouchAction action = new TouchAction(driver);
+
+                // Realiza un swipe hacia arriba
+                action.press(PointOption.point(500, 1500))
+                        .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
+                        .moveTo(PointOption.point(500, 500))
+                        .release()
+                        .perform();
+
+                attempts++;
+            }
+        }
 
         // Espera a que el elemento sea visible
         actor.attemptsTo(

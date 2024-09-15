@@ -75,11 +75,13 @@ public class RevisaCarrito implements Task {
             }
         }
 
+        int maxSwipeAttempts = productNamesList.size() == productosValidosList.size() ? productNamesList.size() : 5;
+
         for (String producto : productosValidosList) {
             String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
 
             // Realiza el scroll hacia el producto
-            actor.attemptsTo(SwipeToElement.withText(producto));
+            actor.attemptsTo(SwipeToElement.withText(producto, maxSwipeAttempts));
 
             Target PRODUCT_PRICE = Target.the("precio del producto").locatedBy("//android.widget.TextView[contains(@text, '" + producto + "')]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup//android.widget.TextView[contains(@text, '$')]");
             actor.attemptsTo(WaitUntil.the(PRODUCT_PRICE, isVisible()).forNoMoreThan(30).seconds());
