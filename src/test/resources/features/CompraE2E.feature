@@ -10,10 +10,10 @@ Feature: Compra de productos en SwagLabs
   @CompraExitosa
   Scenario: Se desea realizar una compra exitosa en SwagLab
     When realizo la compra de 3 productos aleatorios
-      | Producto            |
-      | Sauce Labs Backpack |
-      #  | Sauce Labs Bike Light   |
-      | Sauce Labs Onesie   |
+      | Producto              |
+      | Sauce Labs Backpack   |
+      | Sauce Labs Bike Light |
+      | Sauce Labs Onesie     |
     And nos dirigimos al carrito de compras
     Then Valido que los nombres de los productos agregados sean igual que en el carro
     And Valido que el precio de los productos agregados sean igual que en el carro
