@@ -8,17 +8,18 @@ import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
 
 import org.openqa.selenium.WebElement;
 
-
 public class SwipeToElement implements Interaction {
 
     private final String productName;
+    private final String contenedor;
 
-    public SwipeToElement(String productName) {
+    public SwipeToElement(String productName, String contenedor) {
         this.productName = productName;
+        this.contenedor = contenedor;
     }
 
-    public static ScrollToElement withName(String productName) {
-        return Tasks.instrumented(ScrollToElement.class, productName);
+    public static SwipeToElement with(String productName, String contenedor) {
+        return Tasks.instrumented(SwipeToElement.class, productName, contenedor);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class SwipeToElement implements Interaction {
         // Intenta desplazarte a través del contenedor de productos y encontrar el nombre del producto
         WebElement element = BrowseTheWeb.as(actor).getDriver().findElement(
                 MobileBy.AndroidUIAutomator(
-                        "new UiScrollable(new UiSelector().scrollable(true).description(\"test-Cart Content\"))" +
+                        "new UiScrollable(new UiSelector().scrollable(true).description(\"" + contenedor + "\"))" +
                                 ".scrollIntoView(new UiSelector().text(\"" + productName + "\"));"
                 )
         );

@@ -10,6 +10,6 @@ public class UICartHome {
     //public static Target ITEM_LABEL =
         //Target.the("Items Label").locatedBy("//android.widget.TextView[@text='{0}']");
     public static final Target CHECKOUT_BTN =
-        Target.the("Checkout Btn").located(AppiumBy.xpath("//android.widget.TextView[@text='CHECKOUT']"));
+        Target.the("CheckoutInfo Btn").located(AppiumBy.xpath("//android.widget.TextView[@text='CHECKOUT']"));
     //public static Target PRECIO_ITEM =
 }
