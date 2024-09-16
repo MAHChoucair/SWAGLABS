@@ -125,9 +125,15 @@ public class CheckoutOver implements Task {
                     ScrollToElement.withText("Shipping Information:")
             );
 
-            double itemTotal = Double.parseDouble(ITEM_TOTAL_LABEL.resolveFor(actor).getText());
-            double tax = Double.parseDouble(TAX_LABEL.resolveFor(actor).getText());
-            double total = Double.parseDouble(TOTAL_LABEL.resolveFor(actor).getText());
+            String itemTotalText = ITEM_TOTAL_LABEL.resolveFor(actor).getText();
+            String itemTotalNumber = itemTotalText.replaceAll("[^\\d.]", "");
+            double itemTotal = Double.parseDouble(itemTotalNumber);
+            String taxText = TAX_LABEL.resolveFor(actor).getText();
+            String taxNumber = taxText.replaceAll("[^\\d.]", "");
+            double tax = Double.parseDouble(taxNumber);
+            String totalText = TOTAL_LABEL.resolveFor(actor).getText();
+            String totalNumber = totalText.replaceAll("[^\\d.]", "");
+            double total = Double.parseDouble(totalNumber);
 
             if (total == itemTotal + tax){
                 actor.attemptsTo(Click.on(FINISH_BTN));
