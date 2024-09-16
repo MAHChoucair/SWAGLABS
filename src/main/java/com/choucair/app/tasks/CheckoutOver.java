@@ -1,25 +1,13 @@
 package com.choucair.app.tasks;
 
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
-
-import io.appium.java_client.AppiumBy;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.PerformsTouchActions;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
-
-import static com.choucair.app.userinterface.UICartHome.*;
-import static com.choucair.app.userinterface.UIPageHome.CART_BTN;
+import static com.choucair.app.userinterface.UICartHome.CHECKOUT_BTN;
+import static com.choucair.app.userinterface.UICheckoutOver.*;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.choucair.app.interactions.ScrollToElement;
 import com.choucair.app.interactions.SwipeToElement;
-import com.choucair.moviles.libreria.interactions.choucair.ScrollTo;
 
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.pages.ListOfWebElementFacades;
@@ -31,36 +19,32 @@ import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
-public class RevisaCarrito implements Task {
+import io.appium.java_client.AppiumBy;
+import io.appium.java_client.MobileBy;
 
-    public static RevisaCarrito deCompras() {
-        return Tasks.instrumented(RevisaCarrito.class);
+public class CheckoutOver implements Task {
+    public static CheckoutOver deCompra() {
+        return Tasks.instrumented(CheckoutOver.class);
     }
 
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                WaitUntil.the(CART_BTN, isVisible()).forNoMoreThan(30).seconds(),
-                Click.on(CART_BTN)
-        );
-
-        actor.attemptsTo(
-                WaitUntil.the(YOUR_CART_LABEL, isVisible()).forNoMoreThan(30).seconds()
+                WaitUntil.the(CHECKOUTOVER_LABEL, isVisible()).forNoMoreThan(30).seconds(),
+                Click.on(CHECKOUTOVER_LABEL)
         );
 
         Set<String> productNamesList = new HashSet<>();
-        boolean isCheckoutVisible = false;
+        boolean isLabelVisible = false;
 
-        while (!isCheckoutVisible) {
+        while (!isLabelVisible) {
             // Localiza todos los elementos que contienen los nombres de los productos visibles
             Target PRODUCT_NAME = Target.the("nombre del producto").locatedBy("//android.view.ViewGroup[@content-desc='test-Item']//android.view.ViewGroup[@content-desc='test-Description']/android.widget.TextView[1]");
             ListOfWebElementFacades productNames = PRODUCT_NAME.resolveAllFor(actor);
@@ -71,17 +55,17 @@ public class RevisaCarrito implements Task {
                 productNamesList.add(productName);
             }
 
-            // Verifica si el botón de checkout es visible
-            isCheckoutVisible = Target.the("botón de checkout")
-                    .located(AppiumBy.xpath("//android.widget.TextView[@text='CHECKOUT']"))
+            // Verifica si el Payment Information Label es visible
+            isLabelVisible = Target.the("Payment Information Label")
+                    .located(AppiumBy.xpath("//android.widget.TextView[@text='Payment Information:']"))
                     .resolveFor(actor)
                     .isPresent();
 
-            if (!isCheckoutVisible) {
+            if (!isLabelVisible) {
                 // Utiliza UiScrollable para desplazarte dentro del contenedor de carrito
                 BrowseTheWeb.as(actor).getDriver().findElement(
                         MobileBy.AndroidUIAutomator(
-                                "new UiScrollable(new UiSelector().scrollable(true).description(\"test-Cart Content\"))" +
+                                "new UiScrollable(new UiSelector().scrollable(true).description(\"test-CHECKOUT: OVERVIEW\"))" +
                                         ".scrollForward();"
                         )
                 );
@@ -110,7 +94,7 @@ public class RevisaCarrito implements Task {
             String precioEsperado = Serenity.sessionVariableCalled(producto + "-PRECIO");
 
             // Realiza el scroll hacia el producto
-            actor.attemptsTo(SwipeToElement.with(producto, "test-Cart Content"));
+            actor.attemptsTo(SwipeToElement.with(producto, "test-CHECKOUT: OVERVIEW"));
 
             Target PRODUCT_PRICE = Target.the("precio del producto").locatedBy("//android.widget.TextView[contains(@text, '" + producto + "')]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup//android.widget.TextView[contains(@text, '$')]");
 
@@ -118,7 +102,7 @@ public class RevisaCarrito implements Task {
             while (!PRODUCT_PRICE.resolveFor(actor).isVisible()) {
                 BrowseTheWeb.as(actor).getDriver().findElement(
                         MobileBy.AndroidUIAutomator(
-                                "new UiScrollable(new UiSelector().scrollable(true).description(\"test-Cart Content\"))" +
+                                "new UiScrollable(new UiSelector().scrollable(true).description(\"test-CHECKOUT: OVERVIEW\"))" +
                                         ".scrollForward();"
                         )
                 );
@@ -138,9 +122,19 @@ public class RevisaCarrito implements Task {
         // Si todas las validaciones son correctas, realiza el clic en el botón de checkout
         if (nombresCoinciden && cantidadesCoinciden && preciosCoinciden) {
             actor.attemptsTo(
-                    SwipeToElement.with("CHECKOUT", "test-Cart Content"),
-                    Click.on(CHECKOUT_BTN)
+                    SwipeToElement.with("CANCEL", "test-CHECKOUT: OVERVIEW")
             );
+
+            double itemTotal = Double.parseDouble(ITEM_TOTAL_LABEL.resolveFor(actor).getText());
+            double tax = Double.parseDouble(TAX_LABEL.resolveFor(actor).getText());
+            double total = Double.parseDouble(TOTAL_LABEL.resolveFor(actor).getText());
+
+            if (total == itemTotal + tax){
+                actor.attemptsTo(Click.on(FINISH_BTN));
+            } else {
+                Logger.getAnonymousLogger().warning("El total no coincide.");
+            }
         }
+
     }
 }

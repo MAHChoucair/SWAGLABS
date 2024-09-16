@@ -1,9 +1,14 @@
 package stepdefinitions;
 
+import static com.choucair.app.userinterface.UICheckoutOver.BACK_HOME_BTN;
 import static com.choucair.app.userinterface.UIPageHome.MODO_VISTA;
+import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
+import com.choucair.app.interactions.SwipeToElement;
+import com.choucair.app.models.UserInformation;
+import com.choucair.app.questions.CompraExitosaQuestions;
 import com.choucair.app.tasks.*;
 
 import net.serenitybdd.core.Serenity;
@@ -50,15 +55,26 @@ public class CompraSteps {
     }
 
     @And("^ingreso los siguientes datos en checkout_information$")
-    public void ingresoLosSiguientesDatosEnCheckout_information() {
+    public void ingresoLosSiguientesDatosEnCheckout_information(DataTable data) {
+        String usuario = Serenity.sessionVariableCalled("firstName").toString();
+
+        UserInformation user = UserInformation.setData(data).get(0);
+        user.setFirstname(usuario);
+        theActorInTheSpotlight().attemptsTo(CheckoutInfo.deInformacion(user));
     }
 
     @And("^confirmo mi compra en checkout_overview$")
     public void confirmoMiCompraEnCheckout_overview() {
-
+        theActorInTheSpotlight().attemptsTo(CheckoutOver.deCompra());
     }
 
     @Then("^debería mostrar el mensaje de (.*)$")
     public void deberíaMostrarElMensajeDe(String mensaje) {
+        String mensajeUpper = mensaje.toUpperCase();
+        theActorInTheSpotlight().should(seeThat(CompraExitosaQuestions.verified(mensajeUpper)));
+        theActorInTheSpotlight().attemptsTo(
+                SwipeToElement.with("BACK HOME", "test-CHECKOUT: COMPLETE!"),
+                Click.on(BACK_HOME_BTN)
+        );
     }
 }
