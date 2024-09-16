@@ -20,3 +20,4 @@
 /target/
 gradlew
 gradlew.bat
+local.properties

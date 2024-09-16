@@ -31,7 +31,36 @@ Estructura del Proyecto
 
 Funcionalidades y Escenarios Cubiertos
 -
+**Funcionalidad: Login**
 
+**Descripción:** Verifica la capacidad del usuario para iniciar sesión en la aplicación.
+
+Escenarios:
+1. [ ] Inicio de sesión exitoso con credenciales válidas
+
+**Funcionalidad: Comprar**
+
+**Descripción:** Verifica la capacidad del usuario para comprar uno o varios productos en la aplicación.
+
+Escenarios:
+1. [ ] Flujo E2E de compra de uno o varios productos exitosamente.
+
+**Escenarios adicionales a probar**
+
+Caso Unhappy: Compra con datos de usuario inválidos
+
+* Simular un error en el proceso de pago, por ejemplo, introduciendo datos de usuario inválidos.
+* Verificar que se muestra un mensaje de error apropiado y que la compra no se completa.
+
+Caso Unhappy: Compra con carrito vacío
+
+* Intentar acceder al proceso de compra con el carrito vacío.
+* Verificar que se muestra un mensaje indicando que el carrito está vacío o que se redirige al usuario a la página principal.
+
+Caso Happy: Cancelar la compra
+
+* Iniciar el proceso de compra y luego cancelarlo en diferentes etapas (antes de ingresar datos de pago, después de ingresar datos de pago, etc.).
+* Verificar que la compra se cancela correctamente y que el usuario regresa a la etapa anterior o a la página principal.
 
 
 Ejecución de pruebas
@@ -63,4 +92,5 @@ Aunque el proyecto por si solo genera la evidencia automaticamente una vez final
 
 Ejemplo comandos de ejecución:
 -
-```   gradle clean test -Dtest.single=LoginRunner aggregate  ```  
+```   gradle clean test -Dtest.single=RunnerCucumber aggregate  ```  
+```   gradle clean test -Dcucumber.filter.tags="@CompraExitosa" aggregate  ```

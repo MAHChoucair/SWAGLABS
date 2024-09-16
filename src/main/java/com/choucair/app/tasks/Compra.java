@@ -1,11 +1,8 @@
 package com.choucair.app.tasks;
 
-import static com.choucair.app.userinterface.UIPageHome.*;
-
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
-import com.choucair.app.interactions.ScrollToElement;
-import com.choucair.moviles.libreria.interactions.choucair.builders.Tap;
+import com.choucair.app.interactions.SwipeToElement;
 
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.Actor;
@@ -14,8 +11,6 @@ import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplay.waits.WaitUntil;
-
-import java.util.List;
 
 public class Compra implements Task {
     private String productos;
@@ -32,7 +27,7 @@ public class Compra implements Task {
     public <T extends Actor> void performAs(T actor) {
 
         actor.attemptsTo(
-                ScrollToElement.withText(productos)
+                SwipeToElement.with(productos, "test-PRODUCTS")
         );
 
         // Busca el botón "+" dentro del contenedor encontrado usando la tercera opción
