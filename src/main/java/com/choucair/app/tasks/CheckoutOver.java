@@ -122,7 +122,7 @@ public class CheckoutOver implements Task {
         // Si todas las validaciones son correctas, realiza el clic en el botón de checkout
         if (nombresCoinciden && cantidadesCoinciden && preciosCoinciden) {
             actor.attemptsTo(
-                    SwipeToElement.with("CANCEL", "test-CHECKOUT: OVERVIEW")
+                    ScrollToElement.withText("Shipping Information:")
             );
 
             double itemTotal = Double.parseDouble(ITEM_TOTAL_LABEL.resolveFor(actor).getText());

@@ -16,7 +16,7 @@ Feature: Compra de productos en SwagLabs
       | Sauce Labs Onesie     |
     And nos dirigimos al carrito de compras a validar nuestra compra
     And ingreso los siguientes datos en checkout_information
-      | lastName | postalcode |
+      | lastname | postalcode |
       | Aguirre  | 14001      |
     And confirmo mi compra en checkout_overview
     Then debería mostrar el mensaje de "Thank you for you order"
