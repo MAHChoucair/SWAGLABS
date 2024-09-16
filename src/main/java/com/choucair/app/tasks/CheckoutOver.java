@@ -136,7 +136,9 @@ public class CheckoutOver implements Task {
             double total = Double.parseDouble(totalNumber);
 
             if (total == itemTotal + tax){
-                actor.attemptsTo(Click.on(FINISH_BTN));
+                actor.attemptsTo(
+                        SwipeToElement.with("FINISH", "test-CHECKOUT: OVERVIEW"),
+                        Click.on(FINISH_BTN));
             } else {
                 Logger.getAnonymousLogger().warning("El total no coincide.");
             }

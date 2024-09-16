@@ -19,5 +19,5 @@ Feature: Compra de productos en SwagLabs
       | lastname | postalcode |
       | Aguirre  | 14001      |
     And confirmo mi compra en checkout_overview
-    Then debería mostrar el mensaje de "Thank you for you order"
+    Then debería mostrar el mensaje de Thank you for you order
 

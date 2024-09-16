@@ -16,5 +16,9 @@ public class UIPageHome {
 
     public static final Target CART_BTN =
             Target.the("Cart Btn").located(AppiumBy.xpath("//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.ImageView"));
+    public static final Target OPCIONES_BUTTON =
+            Target.the("Opciones").located(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"test-Menu\"]/android.view.ViewGroup"));
+    public static final Target LOGOUT_BTN =
+            Target.the("Logout").located(AppiumBy.accessibilityId("test-LOGOUT"));
 }
 

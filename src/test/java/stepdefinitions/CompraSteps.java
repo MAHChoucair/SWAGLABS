@@ -1,7 +1,7 @@
 package stepdefinitions;
 
 import static com.choucair.app.userinterface.UICheckoutOver.BACK_HOME_BTN;
-import static com.choucair.app.userinterface.UIPageHome.MODO_VISTA;
+import static com.choucair.app.userinterface.UIPageHome.*;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
@@ -74,7 +74,8 @@ public class CompraSteps {
         theActorInTheSpotlight().should(seeThat(CompraExitosaQuestions.verified(mensajeUpper)));
         theActorInTheSpotlight().attemptsTo(
                 SwipeToElement.with("BACK HOME", "test-CHECKOUT: COMPLETE!"),
-                Click.on(BACK_HOME_BTN)
+                Click.on(BACK_HOME_BTN),
+                Logout.app()
         );
     }
 }
